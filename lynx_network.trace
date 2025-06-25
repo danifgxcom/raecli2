@@ -1,0 +1,175 @@
+276122 +++ exited with 1 +++
+276121 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=276122, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+276123 +++ exited with 1 +++
+276121 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=276123, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+276124 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3
+276124 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No existe el archivo o el directorio)
+276124 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3
+276124 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No existe el archivo o el directorio)
+276124 socket(AF_INET, SOCK_DGRAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 3
+276124 setsockopt(3, SOL_IP, IP_RECVERR, [1], 4) = 0
+276124 connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("208.67.222.222")}, 16) = 0
+276124 sendmmsg(3, [{msg_hdr={msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\330\226\1\0\0\1\0\0\0\0\0\0\3dle\3rae\2es\0\0\1\0\1", iov_len=28}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, msg_len=28}, {msg_hdr={msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\343\237\1\0\0\1\0\0\0\0\0\0\3dle\3rae\2es\0\0\34\0\1", iov_len=28}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, msg_len=28}], 2, MSG_NOSIGNAL) = 2
+276124 recvfrom(3, "\330\226\201\200\0\1\0\3\0\0\0\0\3dle\3rae\2es\0\0\1\0\1\300\f\0\1"..., 2048, 0, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("208.67.222.222")}, [28 => 16]) = 76
+276124 recvfrom(3, "\343\237\201\200\0\1\0\3\0\0\0\0\3dle\3rae\2es\0\0\34\0\1\300\f\0\34"..., 65536, 0, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("208.67.222.222")}, [28 => 16]) = 112
+276124 socket(AF_NETLINK, SOCK_RAW|SOCK_CLOEXEC, NETLINK_ROUTE) = 3
+276124 bind(3, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+276124 getsockname(3, {sa_family=AF_NETLINK, nl_pid=276124, nl_groups=00000000}, [12]) = 0
+276124 sendto(3, [{nlmsg_len=20, nlmsg_type=RTM_GETADDR, nlmsg_flags=NLM_F_REQUEST|NLM_F_DUMP, nlmsg_seq=1750846484, nlmsg_pid=0}, {ifa_family=AF_UNSPEC, ...}], 20, 0, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 20
+276124 recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[[{nlmsg_len=76, nlmsg_type=RTM_NEWADDR, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1750846484, nlmsg_pid=276124}, {ifa_family=AF_INET, ifa_prefixlen=8, ifa_flags=IFA_F_PERMANENT, ifa_scope=RT_SCOPE_HOST, ifa_index=if_nametoindex("lo")}, [[{nla_len=8, nla_type=IFA_ADDRESS}, inet_addr("127.0.0.1")], [{nla_len=8, nla_type=IFA_LOCAL}, inet_addr("127.0.0.1")], [{nla_len=7, nla_type=IFA_LABEL}, "lo"], [{nla_len=8, nla_type=IFA_FLAGS}, IFA_F_PERMANENT], [{nla_len=20, nla_type=IFA_CACHEINFO}, {ifa_prefered=4294967295, ifa_valid=4294967295, cstamp=2801, tstamp=2801}]]], [{nlmsg_len=88, nlmsg_type=RTM_NEWADDR, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1750846484, nlmsg_pid=276124}, {ifa_family=AF_INET, ifa_prefixlen=24, ifa_flags=0, ifa_scope=RT_SCOPE_UNIVERSE, ifa_index=if_nametoindex("wlp1s0")}, [[{nla_len=8, nla_type=IFA_ADDRESS}, inet_addr("192.168.1.40")], [{nla_len=8, nla_type=IFA_LOCAL}, inet_addr("192.168.1.40")], [{nla_len=8, nla_type=IFA_BROADCAST}, inet_addr("192.168.1.255")], [{nla_len=11, nla_type=IFA_LABEL}, "wlp1s0"], [{nla_len=8, nla_type=IFA_FLAGS}, IFA_F_NOPREFIXROUTE], [{nla_len=20, nla_type=IFA_CACHEINFO}, {ifa_prefered=35378, ifa_valid=35378, cstamp=46342, tstamp=13006331}]]], [{nlmsg_len=92, nlmsg_type=RTM_NEWADDR, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1750846484, nlmsg_pid=276124}, {ifa_family=AF_INET, ifa_prefixlen=24, ifa_flags=IFA_F_PERMANENT, ifa_scope=RT_SCOPE_UNIVERSE, ifa_index=if_nametoindex("mpqemubr0")}, [[{nla_len=8, nla_type=IFA_ADDRESS}, inet_addr("10.255.233.1")], [{nla_len=8, nla_type=IFA_LOCAL}, inet_addr("10.255.233.1")], [{nla_len=8, nla_type=IFA_BROADCAST}, inet_addr("10.255.233.255")], [{nla_len=14, nla_type=IFA_LABEL}, "mpqemubr0"], [{nla_len=8, nla_type=IFA_FLAGS}, IFA_F_PERMANENT], [{nla_len=20, nla_type=IFA_CACHEINFO}, {ifa_prefered=4294967295, ifa_valid=4294967295, cstamp=5039, tstamp=5039}]]]], iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 256
+276124 recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[[{nlmsg_len=72, nlmsg_type=RTM_NEWADDR, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1750846484, nlmsg_pid=276124}, {ifa_family=AF_INET6, ifa_prefixlen=128, ifa_flags=IFA_F_PERMANENT, ifa_scope=RT_SCOPE_HOST, ifa_index=if_nametoindex("lo")}, [[{nla_len=20, nla_type=IFA_ADDRESS}, inet_pton(AF_INET6, "::1")], [{nla_len=20, nla_type=IFA_CACHEINFO}, {ifa_prefered=4294967295, ifa_valid=4294967295, cstamp=2801, tstamp=2801}], [{nla_len=8, nla_type=IFA_FLAGS}, IFA_F_PERMANENT|IFA_F_NOPREFIXROUTE]]], [{nlmsg_len=72, nlmsg_type=RTM_NEWADDR, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1750846484, nlmsg_pid=276124}, {ifa_family=AF_INET6, ifa_prefixlen=64, ifa_flags=IFA_F_PERMANENT, ifa_scope=RT_SCOPE_LINK, ifa_index=if_nametoindex("wlp1s0")}, [[{nla_len=20, nla_type=IFA_ADDRESS}, inet_pton(AF_INET6, "fe80::a192:b7dc:6d20:e433")], [{nla_len=20, nla_type=IFA_CACHEINFO}, {ifa_prefered=4294967295, ifa_valid=4294967295, cstamp=46317, tstamp=46317}], [{nla_len=8, nla_type=IFA_FLAGS}, IFA_F_PERMANENT|IFA_F_NOPREFIXROUTE]]]], iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 144
+276124 recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base=[{nlmsg_len=20, nlmsg_type=NLMSG_DONE, nlmsg_flags=NLM_F_MULTI, nlmsg_seq=1750846484, nlmsg_pid=276124}, 0], iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 20
+276124 socket(AF_INET, SOCK_DGRAM|SOCK_CLOEXEC, IPPROTO_IP) = 3
+276124 connect(3, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr("104.26.1.151")}, 16) = 0
+276124 getsockname(3, {sa_family=AF_INET, sin_port=htons(36621), sin_addr=inet_addr("192.168.1.40")}, [28 => 16]) = 0
+276124 connect(3, {sa_family=AF_UNSPEC, sa_data="\0\0\0\0\0\0\0\0\0\0\0\0\0\0"}, 16) = 0
+276124 connect(3, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr("172.67.69.61")}, 16) = 0
+276124 getsockname(3, {sa_family=AF_INET, sin_port=htons(57364), sin_addr=inet_addr("192.168.1.40")}, [28 => 16]) = 0
+276124 connect(3, {sa_family=AF_UNSPEC, sa_data="\0\0\0\0\0\0\0\0\0\0\0\0\0\0"}, 16) = 0
+276124 connect(3, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr("104.26.0.151")}, 16) = 0
+276124 getsockname(3, {sa_family=AF_INET, sin_port=htons(50138), sin_addr=inet_addr("192.168.1.40")}, [28 => 16]) = 0
+276124 socket(AF_INET6, SOCK_DGRAM|SOCK_CLOEXEC, IPPROTO_IP) = 3
+276124 connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2606:4700:20::681a:197", &sin6_addr), sin6_scope_id=0}, 28) = 0
+276124 getsockname(3, {sa_family=AF_INET6, sin6_port=htons(47115), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "fe80::a192:b7dc:6d20:e433", &sin6_addr), sin6_scope_id=0}, [28]) = 0
+276124 connect(3, {sa_family=AF_UNSPEC, sa_data="\0\0\0\0\0\0\0\0\0\0\0\0\0\0"}, 16) = 0
+276124 connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2606:4700:20::ac43:453d", &sin6_addr), sin6_scope_id=0}, 28) = 0
+276124 getsockname(3, {sa_family=AF_INET6, sin6_port=htons(37873), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "fe80::a192:b7dc:6d20:e433", &sin6_addr), sin6_scope_id=0}, [28]) = 0
+276124 connect(3, {sa_family=AF_UNSPEC, sa_data="\0\0\0\0\0\0\0\0\0\0\0\0\0\0"}, 16) = 0
+276124 connect(3, {sa_family=AF_INET6, sin6_port=htons(443), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "2606:4700:20::681a:97", &sin6_addr), sin6_scope_id=0}, 28) = 0
+276124 getsockname(3, {sa_family=AF_INET6, sin6_port=htons(53761), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "fe80::a192:b7dc:6d20:e433", &sin6_addr), sin6_scope_id=0}, [28]) = 0
+276121 socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3
+276124 +++ exited with 0 +++
+276121 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=276124, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+276121 connect(3, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr("104.26.1.151")}, 16) = -1 EINPROGRESS (Operación en curso)
+276121 connect(3, {sa_family=AF_INET, sin_port=htons(443), sin_addr=inet_addr("104.26.1.151")}, 16) = 0
+276121 sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\26\3\3\1\177\1\0\1{\3\3G\324\367*\v\331X&7\16\35\30\37\317\33\36\315\366v\204\347"..., iov_len=388}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 388
+276121 recvfrom(3, "\26\3\3\0z", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\2\0\0v\3\3\351\274\301\231\vq\2\301\276P_\227\250P\273\3\243\371\360lXC\25\235_Q"..., 122, 0, NULL, NULL) = 122
+276121 sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\24\3\3\0\1\1", iov_len=6}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 6
+276121 recvfrom(3, "\24\3\3\0\1", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\1", 1, 0, NULL, NULL) = 1
+276121 recvfrom(3, "\27\3\3\v\216", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\315\274O2?\36J[i\t_\273\0070\t\234\264\206\35\267Q\34D\t\253\"2\356s\230U\351"..., 2958, 0, NULL, NULL) = 2958
+276121 sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\27\3\3\0EYM\234\331\7\367\33\263S0K}\340\356\213\355\255K\370\0343f\333\343\"\23\362"..., iov_len=74}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 74
+276121 sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\27\3\3\0\324\216\357q|\17\334\315\f\31\340\234\367\246\342>J\302#\3644=\273\334W\262~\310"..., iov_len=217}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 217
+276121 recvfrom(3, "\27\3\3\1\355", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\rdT\217vOS\256\256\330\344\276\324$\321\262\225\360O\316S\216Q\fBD\4\\\372\r\364z"..., 493, 0, NULL, NULL) = 493
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\376b\34T:\337\356\311\177\300\36\213\335*\303\347\365\322\227\317\203\251z\205\351dr\202\216\23\275\264"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\3\35", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "<\216\211s\266i\242\35C\251s\366\334\240\263U(3\253\234H\216%\235\202\20.G\356+p\362"..., 797, 0, NULL, NULL) = 797
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "h\275\361\315\236\273C\371=\270\254T\270\3137\212\31Q&J\357\364$\354\271W\240`^\343f}"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\260\316V\r\232R<&f\370u\246\22\25\362\23\324\324\220\16\16\335X^\203\22\366\1\234\206\302\26"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "@I9\371|\17\21I\374p\224IB\3713Q\304\324\216dS\227|\356\226,.\373D3M\252"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "_\250\350=e\32\315\316\316\210\27\363g\6+\240\31\260\330)\247\35|\244\254 \"\266\37\1\244\300"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "P\374$(\321t\231\v$\277\7\21\3275\v7\261\32\36<\312\271\364\201`\22\271h\220\246\25\377"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5M", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "V\330z\n+(\346\374d\215\4Z\231\24r\222S\372\260\237\374r\377.x\367G\210\304p\232\37"..., 1357, 0, NULL, NULL) = 1357
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\202\302\246\330\2\247\327O 6\326\21\277kG\253\223,\216\24\325\236\353\3146\306\220\225\301c\276)"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\24=l\25\376u\3#\3\27\336\265K\240\251Z\301\215\316[.N\363\222\322\202\244f\213G\5\223"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\230\352\324\205\256\235\364\354\331=\365\227Zy\2\241\353h+\224\7\255\341\304m\340\210\36\340\267\243\213"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\237\35\7\2143\363=\n\2655\32Q\314\236\304)\177\321\364K\ff\4\301#\325\232\326 \261\361&"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\330\5\f\331\262\256\323\272p?\217p\337j\33\276x\204\346S\277`\271h3\346\231\2642\360B\355"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\214;\2403\350q\321:\356\0p\274\372\253\240\211\351i\2624\2160\3144\315>\364d\253h\32\10"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\254e\245C\21\36G\254\25\312\211~\35\202Xe\215\202k\244\314\214P'\265f8\262-o\257p"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\244\216\251|\362\20\243o#\346[\265\312\177K\334\372\312C2\223J\22\232=\20u,\305\3253\261"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\275E\36\200\25'\315\344\317[SQ\206\241\217\365>,\360\245\201\275\2\344c\233s;\324_\324\377"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\243\32\r\22?\366C\330\32\2504\241\203\232\302\21\324\255:\342\241r\236\310\26\220\310\1\370\26\305\227"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\366\300\367T\351\342=\22\361D\227\1;A\27n\300/\277m\3U\332J\227\212?\303zh\346a"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5>", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "I\326k\21\227\267\26\264B0\345\17KB\364\374\312#\305\26shc\200\2J0j\37\\~L"..., 1342, 0, NULL, NULL) = 1342
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\300\226\343|\3\207\203\10\307\305\222\341e\"a\256t}\265\267J\36\343\207OzTH\334\240\372J"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\4\254\346\361\303v;\372\3602$\371\264L1W\273\270\255\273I%h\367\301d\277\23\314\24e\24"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "7\367\337S\225\23\317 \5\270\373\314\347T\262V\307\232\313\333y\35\341c\31\5#\240(\215\271\354"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\210\210\271\236\26\3049\3504\4\332\272_\211Y5!\221\10\263I<\2479\313\215\247\235\332\267\231\225"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\232^\240T\20\312\236\361\256\310p\250L\215%4\377\244\344\231\367e\221\313h\3\"\261I\210E\361"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\331b\256\211\362\36\361\354\2025\tG\264\244\206\324R\352\27\371\303\37\261f\276\36Z+\237\374Q\251"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\227\364\370\320~Dt\365\25\262wx\23295\336\30\273\263\257a^\313\202l\260\277\372\360<\346k"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\344\367`,\321U\320,\215\207\301\335\271\204=\345D~O\304.\356\10\241\267\260\245\v\33OW\\"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\360\230S\233\210\f\5%\371(\35\36\5\262^\37K\352\317-k\257\307J5KC<\0\344B\211"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "w\237\210\373\256\203\251\374\0\226\32\211\36\270\22 t.\333<\373L\272\36\312q$G\262\216$\""..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\277\243\230\357\207\306\245\3546\260'| \375\364Vg\372\307U\331\313\225\30\345\366V\361\177\25'l"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\366\2138\2]\254\v\215i\360*\313Xm>\v\7;\350\\\320%\220C\223\253\360:\24\1\213\216"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "'\354:\367a^\225Y\f\2,p\266\322\21\257\"5\265\352\201\217\277\364\21(\363o\233\323z\257"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\302c3R\260E\330jn\205G\37\224{'\347\25\311U[\1IU\37\271$\20022*\323)"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\234\310\20\254\311\27i\34\240\206\200\264#V\0\31\347\27\262\373\7W\16\37\314\306\215,A\r\324\335"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\201-\374\261vw\216g\224uB-\237\241\326=d\5\351\345E\33\267\275\314\3176sBN\2761"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\275~\370\3101/%_\252\313d\307)\222<\234\211y[Q\300f\201\226=\16\22\356\3070\355q"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\33\277\37\333\35\316n\n\257Y\257\316\203Vu\365\33\343l\331\335\264\335V`\363\v}O\207\22v"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "Q\335~2I\233dM\6\260s5\360\231e0N\200'\373|\10\270\335\32\345*\240\221\337\376\231"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "p\21\352d\326>Q\3F\244\33\1\310\2461\10*\320\324s\356\3101\353l\7\6\360\322x\343\f"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\5j", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\337q\30\226\276g|`\212\265\221\22\377*`\231#\344\345\2204\335\326L\356\10*\222\271\211{\253"..., 1386, 0, NULL, NULL) = 1386
+276121 recvfrom(3, "\27\3\3\17\276", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\3267.\315\357\237\31UL\212?\233\304\334V<\10\n\345_\213@4\t$\333\372\241\335F\256\351"..., 4030, 0, NULL, NULL) = 4030
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "'\301\352;H\257\232\306>\267\3330\323@\361I\3778\372\345\321L\306\234{:\364\1\356R\267\230"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\3/\277\34_\341\246[\265m\271\21\325\251\320L\5\362\265t\261\262\320xY\213\213\303\354\227\241\351"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\221\271\rW\353\263\270\321K\315\31\2\330\2074\367B\33\364\343\345#]O\211V\270<\264T\273v"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\321\302\374\236*\373\373\265\31l\347\200\347\243\215\250L\323\377\t\300p\272\330\374\221\342S\377\374m\262"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\4(D\260\221\vG\5!\342p\36\0245/\r\225\315nsB\204\24\262\265\20\306\323X\224\245\267"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\265\312T\212(\23\261\335:\354('\375\4B\253\373\371\263\t\211\r{\205\305Z\4\3\237H\22\201"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\236\331\21\10\372\367\340\0\223Q\3249\330\347k\311<87xQ\260\311\262V\372\35\230\27\23L]"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\ff", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\330\272\207\247\352&\316\362D!]\36\320^\341gR\3741tE\266c\26d :{\7\37\336#"..., 3174, 0, NULL, NULL) = 3174
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "?\7\361\370mL(.\353`\315gl\363]j1\2157C\2433Z\206A\240\301\244\\\376?9"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\346P\222O\31\201\355\250\215(\326=\375$d[f\203\344\243\215\310\1N\246U\22\3764\25\272\311"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\331?{\263\212\323Z\244\353p\337\204\17&\21`\335M_^k\354i($\33|\330/\312\331\274"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\215m\224a\353\233m\316~\214\345\217\253\316\240\236\240\230N\200*\270i\36AJ\205\0:\301\300\327"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "$\36n\214\304\364\210\227\225\334\262=\234Tb\212\324\327-\247~\224\2\274\2746\362<\315\276DR"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\336p\230\353\200C8\314\rB\374U\357pBX\203i\227zAs\36\0\360o\4\227\0242~a"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\20\226", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\10\225F\206\360\272,\324?!\304X(\223\25\322y\305\2462\322\330\1\340GWKvSl3~"..., 4246, 0, NULL, NULL) = 4246
+276121 recvfrom(3, "\27\3\3\0043", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "\230\20\3535\24\0\277;\223\300\re\261#\251\355\10\21,\254[\312\220\301\356w\237;\364\374\321\4"..., 1075, 0, NULL, NULL) = 1075
+276121 recvfrom(3, "\27\3\3\0\23", 5, 0, NULL, NULL) = 5
+276121 recvfrom(3, "NK&\333G\275\341\354+\307\202\323%K\34\227\351\374\212", 19, 0, NULL, NULL) = 19
+276121 +++ exited with 0 +++
