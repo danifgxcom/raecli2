@@ -2,7 +2,8 @@ use clap::Parser;
 use colored::Colorize;
 use encoding_rs::*;
 use flate2::read::GzDecoder;
-use rustls::{ClientConfig, ClientConnection, RootCertStore, ServerName};
+use rustls::{ClientConfig, ClientConnection, RootCertStore};
+use rustls::pki_types::ServerName;
 use scraper::{Element, Html, Selector};
 use std::error::Error;
 use std::io::Read;
@@ -1341,18 +1342,11 @@ fn hacer_peticion_tls_personalizada(url: &str, debug: bool) -> Result<String, Bo
 
     // Configurar el cliente TLS con configuración por defecto
     let mut root_store = RootCertStore::empty();
-    root_store.add_server_trust_anchors(TLS_SERVER_ROOTS.0.iter().map(|ta| {
-        rustls::OwnedTrustAnchor::from_subject_spki_name_constraints(
-            ta.subject,
-            ta.spki,
-            ta.name_constraints,
-        )
-    }));
+    root_store.extend(TLS_SERVER_ROOTS.iter().cloned());
 
     // Crear una configuración de TLS con valores por defecto
     let config = Arc::new(
         ClientConfig::builder()
-            .with_safe_defaults()
             .with_root_certificates(root_store)
             .with_no_client_auth(),
     );
@@ -1364,7 +1358,7 @@ fn hacer_peticion_tls_personalizada(url: &str, debug: bool) -> Result<String, Bo
 
     // Nota: La configuración personalizada de TLS está desactivada temporalmente
     // debido a cambios en la API de rustls. Usamos la configuración por defecto.
-    let server_name = ServerName::try_from(host)?.to_owned();
+    let server_name = ServerName::try_from(host.to_string())?;
 
     // Simular el timing de Lynx: pausa antes de conectar
     std::thread::sleep(std::time::Duration::from_millis(150));
