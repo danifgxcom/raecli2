@@ -1,1 +1,11 @@
 /target
+*.log
+debug-*.html
+debug-*.txt
+.claude/
+.idea/
+.vscode/
+*.swp
+*.tmp
+.DS_Store
+Thumbs.db
