@@ -17,8 +17,8 @@ name = "test_html_parsing"
 path = "src/test_html_parsing.rs"
 
 [dependencies]
-reqwest = { version = "0.12", features = ["blocking", "cookies", "gzip", "brotli", "deflate"] }
-clap = { version = "4.0", features = ["derive"] }
+reqwest = { version = "0.12", features = ["blocking", "cookies"], default-features = false }
+clap = { version = "4.0", features = ["derive", "std"], default-features = false }
 scraper = "0.23"
 urlencoding = "2.1"
 colored = "3.0"
@@ -38,3 +38,10 @@ assert_matches = "1.5"
 
 [features]
 default = []
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = "z"
+strip = true
+panic = "abort"
