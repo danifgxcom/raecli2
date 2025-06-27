@@ -152,7 +152,20 @@ fn buscar_en_rae_http(palabra: &str, debug: bool) -> Result<String, Box<dyn Erro
     if debug {
         eprintln!("\n✅ CONTENIDO VÁLIDO - extrayendo definición...");
     }
-    extraer_definicion(&html_content)
+    
+    // Extraer la palabra final después de redirecciones
+    let palabra_final = extraer_palabra_de_respuesta(&html_content).unwrap_or_else(|| palabra.to_string());
+    
+    match extraer_definicion(&html_content) {
+        Ok(definiciones) => {
+            if palabra_final != palabra {
+                Ok(format!("{}, {}\n\n{}", palabra_final, palabra, definiciones))
+            } else {
+                Ok(definiciones)
+            }
+        },
+        Err(e) => Err(e)
+    }
 }
 
 fn extraer_definicion(html_content: &str) -> Result<String, Box<dyn Error>> {
@@ -687,10 +700,26 @@ fn simular_lynx_exacto(palabra: &str, debug: bool) -> Result<String, Box<dyn Err
                 eprintln!("✅ Implementación TLS personalizada exitosa - extrayendo definición...");
             }
 
+            // Extraer la palabra final de la URL (después de redirecciones)
+            let palabra_final = extraer_palabra_de_respuesta(&response_str).unwrap_or_else(|| palabra.to_string());
+            
             // Usar el mismo extractor que el Lynx real
             match extraer_definiciones_lynx(&response_str) {
-                Ok(definiciones) => Ok(definiciones),
-                Err(_) => Ok(filtrar_contenido_lynx(&response_str)),
+                Ok(definiciones) => {
+                    if palabra_final != palabra {
+                        Ok(format!("{}, {}\n\n{}", palabra_final, palabra, definiciones))
+                    } else {
+                        Ok(definiciones)
+                    }
+                },
+                Err(_) => {
+                    let contenido = filtrar_contenido_lynx(&response_str);
+                    if palabra_final != palabra {
+                        Ok(format!("{}, {}\n\n{}", palabra_final, palabra, contenido))
+                    } else {
+                        Ok(contenido)
+                    }
+                }
             }
         }
         Err(e) => {
@@ -1570,10 +1599,27 @@ fn hacer_peticion_tls_personalizada(url: &str, debug: bool) -> Result<String, Bo
     // Convertir la respuesta a String
     let response_str = String::from_utf8_lossy(&response).to_string();
 
-    // Mostrar información sobre la respuesta HTTP
+    // Mostrar información sobre la respuesta HTTP y manejar redirecciones
     if let Some(status_line_end) = response_str.find("\r\n") {
         let status_line = &response_str[..status_line_end];
         log_message(&format!("📥 Status: {}", status_line), &mut debug_log);
+        
+        // Verificar si es una redirección
+        if status_line.contains("301") || status_line.contains("302") || status_line.contains("303") || status_line.contains("307") || status_line.contains("308") {
+            if let Some(location) = extract_location_header(&response_str) {
+                log_message(&format!("🔄 Redirigiendo a: {}", location), &mut debug_log);
+                save_log(&debug_log)?;
+                
+                // Solo seguir redirecciones dentro del mismo dominio
+                if location.starts_with("https://dle.rae.es/") {
+                    let new_path = location.replace("https://dle.rae.es", "");
+                    return lynx_tls_fingerprint_con_host(&new_path, "dle.rae.es", debug_tls);
+                } else if location.starts_with("/") {
+                    // Redirección relativa dentro del mismo host
+                    return lynx_tls_fingerprint_con_host(&location, host, debug_tls);
+                }
+            }
+        }
     }
 
     // Extraer y mostrar algunos headers importantes
@@ -1608,8 +1654,51 @@ fn hacer_peticion_tls_personalizada(url: &str, debug: bool) -> Result<String, Bo
     Ok(response_str)
 }
 
+fn extract_location_header(response: &str) -> Option<String> {
+    for line in response.lines() {
+        if line.to_lowercase().starts_with("location:") {
+            return Some(line[9..].trim().to_string());
+        }
+    }
+    None
+}
 
+fn lynx_tls_fingerprint_con_host(path: &str, host: &str, debug: bool) -> Result<String, Box<dyn Error>> {
+    let url = format!("https://{}{}", host, path);
+    hacer_peticion_tls_personalizada(&url, debug)
+}
 
-
+fn extraer_palabra_de_respuesta(html: &str) -> Option<String> {
+    let document = Html::parse_document(html);
+    
+    // Buscar en el meta tag canonical o en el título
+    if let Ok(meta_selector) = Selector::parse("link[rel='canonical']") {
+        if let Some(canonical) = document.select(&meta_selector).next() {
+            if let Some(href) = canonical.value().attr("href") {
+                if let Some(last_part) = href.split('/').last() {
+                    if !last_part.is_empty() && last_part != "dle.rae.es" {
+                        return Some(urlencoding::decode(last_part).unwrap_or(last_part.into()).to_string());
+                    }
+                }
+            }
+        }
+    }
+    
+    // Buscar en el título de la página
+    if let Ok(title_selector) = Selector::parse("title") {
+        if let Some(title) = document.select(&title_selector).next() {
+            let title_text = title.text().collect::<String>();
+            // El título típico es: "palabra | Definición | Diccionario..."
+            if let Some(primera_parte) = title_text.split(" | ").next() {
+                let palabra = primera_parte.trim();
+                if !palabra.is_empty() && palabra.len() < 50 {
+                    return Some(palabra.to_string());
+                }
+            }
+        }
+    }
+    
+    None
+}
 
 

@@ -12,7 +12,8 @@ RAE CLI is a Rust command-line utility that searches for word definitions in the
 - **Install**: `./install.sh` (copies binary to /usr/local/bin)
 - **Run**: `cargo run -- <word>` or `./target/release/raecli2 <word>`
 - **Debug mode**: `cargo run -- --debug <word>` (saves HTML and TLS logs for analysis)
-- **Test**: No test framework configured
+- **Test**: `cargo test` (integration tests available)
+- **Redirect Tests**: `cargo test --test redirect_tests` (specific tests for redirect functionality)
 - **Lint**: Use `cargo clippy` for linting
 - **Format**: Use `cargo fmt` for code formatting
 
@@ -26,6 +27,7 @@ RAE CLI is a Rust command-line utility that searches for word definitions in the
 4. **Definition Validator** (`src/main.rs:307-378`): Filters real definitions from navigation/UI elements using pattern matching
 5. **Cloudflare Detection** (`src/main.rs:380-433`): Detects Cloudflare challenge pages
 6. **Color Display** (`src/main.rs:27-45`): Colorizes output using the colored crate
+7. **HTTP Redirect Handler** (`src/main.rs:1574-1594`, `src/main.rs:1611-1689`): Automatically follows HTTP redirections for canonical word forms
 
 ### TLS Fingerprinting Strategy
 
@@ -40,6 +42,7 @@ RAE CLI is a Rust command-line utility that searches for word definitions in the
 - Lynx user-agent: "Lynx/2.9.0 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/3.8.3"
 - Minimal headers (Accept: text/html, Accept-Language: es)
 - Basic Cloudflare challenge detection
+- Automatic redirect following (up to 10 redirects)
 
 ### Definition Extraction Logic
 
@@ -73,3 +76,69 @@ Uses multiple CSS selectors with fallback strategy:
 - Definition validation requires minimum 15 characters and grammatical markers
 - Binary name is `raecli2` but project references "rae-cli" in clap configuration
 - Debug mode saves HTML files and TLS handshake logs for analysis
+
+## HTTP Redirect Handling Challenge
+
+### Problem Statement
+The RAE website automatically redirects certain word forms to their canonical base forms using HTTP 301/302 redirects. For example:
+- Feminine forms redirect to masculine: `petarda` → `petardo`
+- Derived forms redirect to base: `novia` → `novio`
+- Irregular forms redirect to dictionary headwords
+
+Without redirect handling, the CLI would fail to show definitions for redirected terms.
+
+### Technical Solution
+
+**TLS Fingerprint Client:**
+- Manual HTTP status line parsing to detect 301/302/303/307/308 responses
+- Location header extraction from raw HTTP response
+- Recursive calls to `lynx_tls_fingerprint_con_host()` for same-domain redirects
+- Limited to `dle.rae.es` domain for security
+
+**HTTP Fallback Client:**
+- Built-in redirect support via `reqwest::redirect::Policy::limited(10)`
+- Automatic handling without manual intervention
+
+**Word Extraction:**
+- Parse final canonical word from HTML `<title>` tag or `link[rel='canonical']`
+- Display format: `canonical_word, searched_word` when different
+- Preserves user context while showing actual dictionary entry
+
+### Implementation Details
+
+Key functions:
+- `extract_location_header()`: Parses HTTP Location header
+- `extraer_palabra_de_respuesta()`: Extracts canonical word from HTML
+- `lynx_tls_fingerprint_con_host()`: Handles TLS redirect requests
+
+**Example Output:**
+```
+$ raecli2 petarda
+petardo, petarda
+
+1. m. y f. despect. coloq. Persona pesada, aburrida...
+```
+
+### Test Cases
+- `petarda` → `petardo, petarda` + definitions
+- `novia` → `novio, novia` + definitions  
+- `casa` → definitions only (no redirect)
+
+### Automated Tests
+The redirect functionality is covered by integration tests in `tests/redirect_tests.rs`:
+
+**Test Coverage:**
+- Feminine-to-masculine redirects (`test_feminine_to_masculine_redirect`)
+- Alternative redirect cases (`test_another_feminine_redirect`) 
+- Non-redirect scenarios (`test_no_redirect_case`)
+- Debug mode behavior (`test_redirect_with_debug_mode`)
+- Unit tests for HTTP parsing logic
+
+**Run Tests:**
+```bash
+cargo test --test redirect_tests
+```
+
+**Performance Tests:**
+- Redirect response time validation (ignored by default)
+- Error handling for invalid words (ignored by default)
